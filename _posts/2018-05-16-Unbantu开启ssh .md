@@ -25,7 +25,8 @@ updated: 2018-05-16
 
    
 
-- 
+   
+
 
 ```Java
 sudo apt-get install openssh-server
@@ -50,7 +51,8 @@ sudo apt-get install openssh-server
  sudo ps -e |grep ssh
  ```
  - 然后使用ifconfig命令查看本机的ip：
- - 
+
+   
 
 ```Java
 ifconfig
@@ -65,8 +67,6 @@ ifconfig
 命令：ssh 192.168.127.153
 ```
 <img src="{{ site.url }}/assets//blog_images/unbantu开启shh04.png" />
-
-[]: 
 
 
 
