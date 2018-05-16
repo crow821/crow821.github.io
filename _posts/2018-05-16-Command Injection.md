@@ -15,11 +15,11 @@ Command   Injection，即命令注入，是指通过提交恶意构造的参数�
 
 ### low：
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_01.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_01.png" />
 
 代码： 
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_02.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_02.png" />
 
 相关函数介绍 
 
@@ -37,7 +37,7 @@ window和linux系统都可以用&&来执行多条命令
 
 192.168.1.1&&net user（windows和linux都可以使用）
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_03.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_03.png" />
 
 **命令连接符（可以使用cmd进行验证）**
 
@@ -47,11 +47,11 @@ window和linux系统都可以用&&来执行多条命令
 
 指令：127.0.0.1 | net user
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_04.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_04.png" />
 
 3. command1 & command2    先执行command2后执行command1 
 
-      
+  ​    
 
    命令：192.168.1.1 & net user 
 
@@ -59,7 +59,7 @@ window和linux系统都可以用&&来执行多条命令
 
    
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_05.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_05.png" />
 
 
 
@@ -75,7 +75,7 @@ window和linux系统都可以用&&来执行多条命令
 
 **Medium**
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_06.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_06.png" />
 
  相比Low级别的代码，服务器端对ip参数做了一定过滤，即把”&&” ,”;”删除，本质上采用的是黑名单机制，因此依旧存在安全问题。因为被过滤的只有”&&”与”;”，所以”&”不会受影响。
 
@@ -87,27 +87,27 @@ window和linux系统都可以用&&来执行多条命令
 
 这是因为”192.168.1.1&;& ipconfig”中的” ;”会被替换为空字符，这样一来就变成了”192.168.1.1&& ipconfig” ,会成功执行。
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_07.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_07.png" />
 
 
 
 同理： 192.168.1.1 &; net user也可以 
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_08.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_08.png" />
 
 就算是顺序反过来也是不影响的（;和&符号） 
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_09.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_09.png" />
 
 或者是 192.168.1.1 ;| net user  
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_10.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_10.png" />
 
 **High** 
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_11.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_11.png" />
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_12.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_12.png" />
 
 相比Medium级别的代码，High级别的代码进一步完善了黑名单，但由于黑名单机制的局限性，我们依然可以绕过。
 
@@ -115,11 +115,17 @@ window和linux系统都可以用&&来执行多条命令
 
 黑名单看似过滤了所有的非法字符，但仔细观察到是把”| ”（注意这里|后有一个空格）替换为空字符，于是    ”|” 就有用了。(感觉这里有点扯。。。。）
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_13.png" />
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_13.png" />
 
-直接使用： 192.168.1.1 |net user（|net 之间不要有空格，不然就被转义了。。。） 
+直接使用：
 
-<img src="{{ site.url }}/assets//dvwa_Command Injection_14.png" />
+```
+ 192.168.1.1 |net user（|net 之间不要有空格，不然就被转义了。。。）
+```
+
+ 
+
+<img src="{{ site.url }}/assets/blog_images/dvwa_Command Injection_14.png" />
 
 
 
