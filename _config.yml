@@ -218,7 +218,7 @@ social:
   GitHub: https://github.com/crow821
   #ZhiHu: https://www.zhihu.com/people/Jackpon/activities
   404公益@宝贝回家: http://crowsec.top/404.html
-  LeetCode: https://crowsec/site/
+  LeetCode: http://crowsec/site/
   
 # Social Links Icons
 # Icon Mapping:
@@ -494,8 +494,8 @@ rating:
 # You can visit https://leancloud.cn get AppID and AppKey.
 leancloud_visitors:
   enable: true
-  app_id: 8dMdPNUfCSRrEQkCXzFfhpCh-gzGzoHsz
-  app_key: bFqTVE7vn2VNdwAxQmJw67wy
+  app_id: fIlVjLv34Ml5L2oudnpl9Cws-gzGzoHsz
+  app_key: bn6NUXPUdh1XQGGyJs4eXBXF
 
 # Show PV/UV of the website/page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/
