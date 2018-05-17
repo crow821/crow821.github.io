@@ -7,7 +7,10 @@ tags:
 updated: 2018-05-16
 ---
 
-- Metasploitable漏洞演练系统 是Metasploit团队维护的一个集成了各种漏洞弱点的Linux主机(ubuntu)镜像,这方便大家对于msf的学，以下以6667端口的unreal_ircd_3281_backdoor进行攻击。
+
+
+
+Metasploitable漏洞演练系统 是Metasploit团队维护的一个集成了各种漏洞弱点的Linux主机(ubuntu)镜像,这方便大家对于msf的学，以下以6667端口的unreal_ircd_3281_backdoor进行攻击。
 
   可以在虚拟机中启动（登录密码和账号都是msfadmin）
 
