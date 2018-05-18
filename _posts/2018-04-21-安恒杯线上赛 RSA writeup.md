@@ -3,7 +3,7 @@ title: 2018.04.21-安恒杯线上赛 RSA writeup
 categories:
 - ctf
 tags:
-- rsa,安恒杯线上赛,writeup
+- rsa;安恒杯线上赛;writeup
 updated: 2018-04-21
 ---
 
