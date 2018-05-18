@@ -1,10 +1,10 @@
 ---
 title: Unbantu16.04开启ssh
 categories:
-- Unbantu
+- 运维
 tags:
-- ssh
-updated: 2018-05-16
+- Unbantu
+updated: 2018-05-07
 ---
 
 1.记得在首先使用的时候对于unbantu的源进行更换到国内的源
