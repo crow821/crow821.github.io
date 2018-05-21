@@ -5,7 +5,7 @@ layout: page
 
 Welcome to crowsec GitBlog ！
 ----------------------------
-这是我的个人博客，当初建此网站的初心是为了整理自己的编程过程，可以当做是我的电子日志吧。
+这是我的个人博客，里面的内容都是自己的笔记，慎用！！！
 **附上联系方式：**
 
 
@@ -14,5 +14,5 @@ Welcome to crowsec GitBlog ！
  - GitHub：[crow821][2]
 
 
-  [1]: https://www.zhihu.com
-  [2]: https://github.com/crow821
+[1]: https://www.zhihu.com
+[2]: https://github.com/crow821
