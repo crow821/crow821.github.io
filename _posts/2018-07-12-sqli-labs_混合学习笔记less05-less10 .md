@@ -1,5 +1,5 @@
 ---
-title: sqli-labs_混合学习笔记less05-less
+title: sqli-labs_混合学习笔记less05-less10
 categories:
 - sql注入
 tags:
