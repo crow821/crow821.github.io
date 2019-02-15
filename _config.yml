@@ -6,7 +6,7 @@
 # Site
 title: crow
 subtitle:
-description: "当你凝望深渊的时候，深渊也在凝望着你！"
+description: "never get anywhere"
 author: crow
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
 language: zh-Hans
@@ -86,7 +86,7 @@ keywords: "Jekyll, NexT"
 rss:
 
 # Specify the date when the site was setup
-since: 2018
+since: 2019
 
 # icon between year and author @Footer
 authoricon: heart
