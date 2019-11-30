@@ -318,13 +318,19 @@
         {{ post.content }}
       {% endif  %}
     </div>
-
+	
+	<div>
+      {% if not is_index %}
+        {% include 'my-copyright.html' %}
+      {% endif %}
+	</div>
+	
     <div>
       {% unless is_index %}
         {% include _macro/wechat-subscriber.html %}
       {% endunless %}
     </div>
-
+	
     <div>
       {% unless is_index %}
         {% include _macro/reward.html %}
