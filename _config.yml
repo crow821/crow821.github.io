@@ -151,9 +151,9 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-#scheme: Muse
+scheme: Muse
 #scheme: Mist
-scheme: Pisces
+#scheme: Pisces
 
 
 # ---------------------------------------------------------------
@@ -217,8 +217,8 @@ social:
   #LinkLabel: Link
   GitHub: https://github.com/crow821
   #ZhiHu: https://www.zhihu.com/people/Jackpon/activities
-  404公益@宝贝回家: http://crowsec.top/404.html
-  LeetCode: http://crowsec/site/
+  404公益@宝贝回家: http://crowsec.cn/404.html
+  #LeetCode: http://crowsec/site/
   
 # Social Links Icons
 # Icon Mapping:
@@ -232,7 +232,7 @@ social_icons:
   GitHub: github
   #ZhiHu: joomla
   404公益@宝贝回家: child
-  LeetCode: drupal
+  #LeetCode: drupal
   #Weibo: weibo
 
 
