@@ -92,7 +92,7 @@ since: 2017
 authoricon: heart
 
 # Footer `powered-by` and `theme-info` copyright
-copyright: true
+copyright: false
 
 # ---------------------------------------------------------------
 # SEO Settings
@@ -334,7 +334,7 @@ post_wordcount:
 
 # Declare license on posts
 post_copyright:
-  enable: false
+  enable: true
   license: CC BY-NC-SA 3.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/3.0/
 
@@ -419,8 +419,8 @@ changyan:
 # baidushare: true
 ##  type: button
 
-# Share
-#jiathis:
+# Share 因为不支持https，所以就算了
+#jiathis: true
 # Warning: JiaThis does not support https.
 #add_this_id:
 
