@@ -3,17 +3,13 @@ title: about
 layout: page
 ---
 
-Welcome to crowsec GitBlog ！
+回首过去，一事无成！
 ----------------------------
-这是我的个人博客，里面的内容都是自己的笔记，慎用！！！
-**附上联系方式：**
 
-
+ - 读过几年书，越来越感觉自己浑浑噩噩的！
+ - 希望能做自己喜欢的事。
  - 邮箱：YXo4MDFzZWNAZ21haWwuY29t
- - 知乎：[欢迎一起来讨论][1]
- - GitHub：[crow821][2]
+ - GitHub：[crow821][1]
 
-
-[1]: https://www.zhihu.com
-[2]: https://github.com/crow821
+[1]: https://github.com/crow821
 
