@@ -5,7 +5,7 @@
 
 # Site
 title: crowsec
-subtitle: 一事无成
+subtitle: 
 description: "never get anywhere"
 author: crow
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
@@ -334,7 +334,7 @@ post_wordcount:
 
 # Declare license on posts
 post_copyright:
-  enable: false
+  enable: true
   license: CC BY-NC-SA 3.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/3.0/
 
