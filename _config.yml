@@ -5,7 +5,7 @@
 
 # Site
 title: crowsec
-subtitle:
+subtitle: 一事无成
 description: "never get anywhere"
 author: crow
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
@@ -217,7 +217,7 @@ social:
   #LinkLabel: Link
   GitHub: https://github.com/crow821
   #ZhiHu: https://www.zhihu.com/people/Jackpon/activities
-  404公益@宝贝回家: http://crowsec.cn/404.html
+  #404公益@宝贝回家: http://crowsec.cn/404.html
   #LeetCode: http://crowsec/site/
   
 # Social Links Icons
@@ -231,7 +231,7 @@ social_icons:
   # KeyMapsToSocialItemKey: NameOfTheIconFromFontAwesome
   GitHub: github
   #ZhiHu: joomla
-  404公益@宝贝回家: child
+  #404公益@宝贝回家: child
   #LeetCode: drupal
   #Weibo: weibo
 
@@ -269,8 +269,8 @@ sidebar:
   #  - always  expand for all pages automatically
   #  - hide    expand only when click on the sidebar toggle icon.
   #  - remove  Totally remove sidebar including sidebar toggle.
-  #display: post
-  display: always
+  display: post
+  #display: always
   #display: hide
   #display: remove
 
