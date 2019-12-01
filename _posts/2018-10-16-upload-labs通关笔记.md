@@ -111,7 +111,11 @@ if (isset($_POST['submit'])) {
 
 菜刀连接，显示连接正常。
 
-# pass-03 禁止上传`.asp|.aspx|.php|.jsp`后缀文件
+# pass-03
+
+```html
+ 禁止上传.asp|.aspx|.php|.jsp后缀文件
+```
 
 查看源码：
 
@@ -600,60 +604,3 @@ if(isset($_POST['submit'])){
 <img src="{{ site.url }}/assets//blog_images/2018/8月/upload-labs_13_03.png" />
 
 # pass14 15都可以使用13的方法 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
