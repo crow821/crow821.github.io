@@ -19,7 +19,7 @@ updated: 2018-08-01
 
 <img src="{{ site.url }}/assets//blog_images/2018/8月/upload-labs_01.png" />
 
-**pass-01 客户端使用js对不合法图片进行检查！ **
+# pass-01 客户端使用js对不合法图片进行检查！ 
 
 首先查看源码：
 
@@ -57,7 +57,7 @@ function checkFile() {
 
 <img src="{{ site.url }}/assets//blog_images/2018/8月/upload-labs_1_03.png" />
 
-法1
+**法1**
 
 接下来我们可以使用bp改包上传：
 
@@ -69,7 +69,7 @@ function checkFile() {
 
 <img src="{{ site.url }}/assets//blog_images/2018/8月/upload-labs_1_05.png" />
 
-法2 
+**法2** 
 
 直接在firefox中禁用js（有些后台中利用js进行校验，只要禁用了之后就可以直接跳转到后台，绕过登录）
 
@@ -79,7 +79,7 @@ function checkFile() {
 
 这个时候刷新页面，再次点击上传即可！（做完之后记得改回来）
 
-**pass-02  服务端对数据包的MIME进行检查**
+# pass-02  服务端对数据包的MIME进行检查
 
 查看一下代码：
 
@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 
 菜刀连接，显示连接正常。
 
-**pass-03 禁止上传`.asp|.aspx|.php|.jsp`后缀文件**
+# pass-03 禁止上传`.asp|.aspx|.php|.jsp`后缀文件
 
 查看源码：
 
@@ -148,7 +148,13 @@ if (isset($_POST['submit'])) {
 
 本关的本意是想上传一些后缀名为php、php2、php3、php5、phtml等文件去绕过黑名单的,那就直接上传一个1.php3文件，直接可以解析到。
 
-**pass04**`_.php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf后缀文件禁止上传`
+# pass04
+
+```html
+php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf后缀文件禁止上传
+```
+
+
 
 ```php
 $is_upload = false;
@@ -201,7 +207,11 @@ if (isset($_POST['submit'])) {
 
 <img src="{{ site.url }}/assets//blog_images/2018/8月/upload-labs_4_01.png" />
 
-**pass05_**`.php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf|.htaccess后缀文件禁止上传！`
+# pass05
+
+```html
+php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf|.htaccess后缀文件禁止上传！
+```
 
 查看源码：
 
@@ -235,7 +245,11 @@ if (isset($_POST['submit'])) {
 
 <img src="{{ site.url }}/assets//blog_images/2018/8月/upload-labs_5_01.png" />
 
-**Pass06_`.**php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf后缀文件禁止上传！`
+# Pass06
+
+```html
+php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf后缀文件禁止上传！
+```
 
 查看源码：
 
@@ -271,7 +285,7 @@ if (isset($_POST['submit'])) {
 
 连接菜刀更新缓存之后，发现连接成功。
 
-**pass-07 禁止上传所有可以解析的后缀！** 
+# pass-07 禁止上传所有可以解析的后缀！ 
 
 查看源码：
 
@@ -307,9 +321,13 @@ if (isset($_POST['submit'])) {
 
 直接在bp中修改，然后菜刀连接即可！
 
-**pass08**_`.php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf|.htaccess后缀文件禁止上传！`
+# pass08
 
-查看源码：``
+```html
+php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf|.htaccess后缀文件禁止上传！
+```
+
+查看源码：
 
 ```php
 $is_upload = false;
@@ -357,7 +375,7 @@ if (isset($_POST['submit'])) {
 
 利用bp在1.php后面加  ::$DATA   直接就上传成功了，直接菜刀连接即可！
 
-**Pass-09 只允许上传.jpg|.png|.gif后缀的文件！** 
+# Pass-09 只允许上传.jpg|.png|.gif后缀的文件！ 
 
 查看源码：
 
@@ -390,7 +408,11 @@ if (isset($_POST['submit'])) {
 
 直接使用pass08中法一即可
 
-**pass10`_.**php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf|.htaccess字符被去除！`
+# pass10
+
+```html
+php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf|.htaccess字符被去除！
+```
 
 查看源码：
 
@@ -415,7 +437,7 @@ if (isset($_POST['submit'])) {
 
 直接上传一个1.php一句话木马，发现后缀被删除了，后台使用str_ireplace函数将文件后缀为黑名单的都给删除了，但是str_ireplace函数只做一次替换，所以使用pphphp后缀名就能绕过 ，直接上传一句话木马1.pphphp即可
 
-**pass11  pass上传路径可控！ **
+# pass11  pass上传路径可控！ 
 
 查看源码：
 
@@ -468,7 +490,7 @@ $img_path = $_GET['save_path']."/".rand(10, 99).date("YmdHis").".".$file_ext;
 
 这个时候就显示上传成功了
 
-**pass12  本pass上传路径可控！**
+# pass12  本pass上传路径可控！
 
 查看文件源码：
 
@@ -509,7 +531,7 @@ if(isset($_POST['submit'])){
 
 直接点击上传即可。
 
-**pass13 本pass检查图标内容开头2个字节！ **
+# pass13 本pass检查图标内容开头2个字节！ 
 
 查看源码：
 
@@ -577,7 +599,7 @@ if(isset($_POST['submit'])){
 
 <img src="{{ site.url }}/assets//blog_images/2018/8月/upload-labs_13_03.png" />
 
-**pass14 15都可以使用13的方法 **
+# pass14 15都可以使用13的方法 
 
 
 
